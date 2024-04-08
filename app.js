@@ -9,6 +9,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(bodyParser.json());
 
+app.get('/', () => {
+  console.log('Working...');
+});
+
 app.post('/send-mail', async (req, res) => {
   const {email} = req.body;
   const {subject} = req.body;
