@@ -38,9 +38,10 @@ app.post('/send-mail', async (req, res) => {
   const info = await transporter.sendMail(msg);
 
   console.log('Message sent: %s', info.messageId);
-  console.log('Preview url: %s', nodemailer.getTestMessageUrl(info));
 
   res.send('Email sent!');
+  
+  return {'success': 'Email sent!'};
 });
 
 app.listen(port, () => console.log('App di esempio per http://localhost:' + port));
