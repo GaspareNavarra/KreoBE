@@ -17,7 +17,8 @@ app.use(bodyParser.json());
 app.post('/', async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  
+  next();
+
   const {email} = req.body;
   const {subject} = req.body;
   const {text} = req.body;
