@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
   res.status(200).send('This is the main page!');
 });
 
-app.post('/', async (req, res) => {
+app.post('/send-mail', async (req, res) => {
   const {email} = req.body;
   const {subject} = req.body;
   const {text} = req.body;
@@ -40,7 +40,7 @@ app.post('/', async (req, res) => {
 
   console.log('Message sent: %s', info.messageId);
 
-  res.status(200).send('Email sent!');
+  res.status(200).send(msg);
 });
 
 app.listen(port, () => console.log('App di esempio per http://localhost:' + port));
