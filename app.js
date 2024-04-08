@@ -14,10 +14,7 @@ app.use(bodyParser.json());
 //   res.status(200).send('This is the main page!');
 // });
 
-app.post('/', async (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+app.post('/', async (req, res) => {
 
   const {email} = req.body;
   const {subject} = req.body;
