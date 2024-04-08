@@ -9,12 +9,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  console.log('Working...');
-  res.status(200).send('This is the main page!');
-});
+// app.get('/', (req, res) => {
+//   console.log('Working...');
+//   res.status(200).send('This is the main page!');
+// });
 
-app.post('/send-mail', async (req, res) => {
+app.post('/', async (req, res) => {
   const {email} = req.body;
   const {subject} = req.body;
   const {text} = req.body;
