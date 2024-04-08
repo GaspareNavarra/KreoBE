@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 app.get('/', () => {
   console.log('Working...');
+  res.status(200).send('This is the main page!');
 });
 
 app.post('/send-mail', async (req, res) => {
@@ -39,9 +40,7 @@ app.post('/send-mail', async (req, res) => {
 
   console.log('Message sent: %s', info.messageId);
 
-  res.send('Email sent!');
-  
-  return {'success': 'Email sent!'};
+  res.status(200).send('Email sent!');
 });
 
 app.listen(port, () => console.log('App di esempio per http://localhost:' + port));
