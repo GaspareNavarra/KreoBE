@@ -18,11 +18,6 @@ app.use('/', function(req, res, next) {
   next();
 });
 
-app.use('/', async(req, res) => {
-  console.log('Working...');
-  res.status(200).send('This is the main page!');
-});
-
 app.post('/send-mail',async (req, res) => {
   
   console.log(res);
