@@ -9,12 +9,16 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(bodyParser.json());
 
-// app.get('/', (req, res) => {
-//   console.log('Working...');
-//   res.status(200).send('This is the main page!');
-// });
+app.use('/', function(req, res, next) {
+  console.log('Working...');
+  res.setHeader('Access-Control-Allow-Origin', 'https://kreo-liard.vercel.app'); //'http://localhost:5173',
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'x-Requested-With,content-type,datainizio,datafine,token,schema');
+  res.status(200).send('This is the main page!');
+  next();
+});
 
-app.post('/', async (req, res) => {
+app.post('/send-mail',async (req, res) => {
   
   console.log(res);
   console.log(req);
