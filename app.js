@@ -14,7 +14,7 @@ app.use('/', function(req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', 'https://kreo-liard.vercel.app'); //'http://localhost:5173',
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'x-Requested-With,content-type,datainizio,datafine,token,schema');
-  res.status(200).send('This is the main page!');
+  // res.status(200).send('This is the main page!');
   next();
 });
 
