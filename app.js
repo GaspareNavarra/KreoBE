@@ -16,10 +16,10 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use('/', async (req, res, next) => {
+app.get('/', async (req, res, next) => {
   console.log('Working...');
-  // res.status(200).send('This is the main page!');
-  next();
+  res.send('This is the main page!');
+  // next();
 });
 
 app.post('/send-mail', async (req, res) => {
