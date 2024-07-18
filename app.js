@@ -1,6 +1,7 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
+const { default: axios } = require('axios');
 
 const app = express();
 const port = 3000;
@@ -55,4 +56,16 @@ app.post('/send-mail', async (req, res) => {
   res.status(200).send(msg);
 });
 
+app.get('/search-customer', async (req, res) => {
+
+  axios.get('https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/customer').then((response) => {
+    console.log(response);
+    let data = response.data;
+
+    return res.status(200).send(data);
+  }).catch((error) => {
+    console.log(error);
+    return res.status(404).send({result: 404});
+  });
+});
 app.listen(port, () => console.log('App di esempio per http://localhost:' + port));
