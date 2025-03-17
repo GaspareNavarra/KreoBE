@@ -97,14 +97,24 @@ app.post("/save-entrance", async (req, res) => {
   };
 
   axios
-    .post(
-      "https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/ingressi",
+  .post(
+    "https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/ingressi",
       body,
       config
     )
     .then((response) => {
       //TODO: Aggiungere logica per cui se ci sono troppi ingressi per il customer selezionato allora si cancella
       // l'ultimo record e si memorizza l'ultimo ingresso fatto
+      
+    });
+  
+    axios.get("https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/ingressi/entrances/{customer_id}")
+    .replace("{customer_id}", "id_customer")
+    .then((response) => {
+      // Una volta recuperati gli ingressi del customer bisogna controllare quanti sono, se sono più del valore deciso allora si cancella l'ultimo ingresso
+    }).catch((error) => {
+      console.log(error);
+      return res.status(404).send({ error: error });
     });
 });
 app.listen(port, () =>
