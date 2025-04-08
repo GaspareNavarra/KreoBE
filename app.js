@@ -96,26 +96,49 @@ app.post("/save-entrance", async (req, res) => {
     headers: { Authorization: authorization },
   };
 
-  axios
-  .post(
-    "https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/ingressi",
-      body,
-      config
-    )
-    .then((response) => {
-      //TODO: Aggiungere logica per cui se ci sono troppi ingressi per il customer selezionato allora si cancella
-      // l'ultimo record e si memorizza l'ultimo ingresso fatto
+  axios.post("https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/ingressi", body, config)
+  .then((response) => {
+    if(response.status == 200) {
+      let url = "https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/ingressi/entrances/{customer_id}";
+      url = url.replace("{customer_id}", body.customer_id);
       
-    });
-  
-    axios.get("https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/ingressi/entrances/{customer_id}")
-    .replace("{customer_id}", "id_customer")
-    .then((response) => {
-      // Una volta recuperati gli ingressi del customer bisogna controllare quanti sono, se sono più del valore deciso allora si cancella l'ultimo ingresso
-    }).catch((error) => {
-      console.log(error);
-      return res.status(404).send({ error: error });
-    });
+      axios.get(url, config)
+      .then((call) => {
+        if(call.status == 200) {
+          // Una volta recuperati gli ingressi del customer bisogna controllare quanti sono, se sono più del valore deciso allora si cancella l'ultimo ingresso
+          let entrances = call.data;
+          
+          if(entrances.length > 8) {
+            let toDelete = entrances.slice(0, -8).map(obj => obj.id);
+            let url = "https://x8ki-letl-twmt.n7.xano.io/api:Fh-KZon-/ingressi/{ingressi_id}";
+            Object.values(toDelete).forEach((id) => {
+
+              axios.delete(url.replace("{ingressi_id}", id), config)
+              .then((data) => {
+                console.log(data);
+                if(data.status == 200) {
+                  return res.status(200).send({status: 200});
+                } else {
+                  return res.status(404).send({ error: error });  
+                }
+              }).catch((error) => {
+                console.log(error);
+                return res.status(404).send({ error: error });
+              });
+            });
+          } else {
+            return res.status(200).send({status: 200});
+          }
+        }
+      }).catch((error) => {
+        console.log(error);
+        return res.status(404).send({ error: error });
+      });
+    }
+  }).catch((error) => {
+    console.log(error);
+    return res.status(404).send({ error: error });
+  });
 });
 app.listen(port, () =>
   console.log("App di esempio per http://localhost:" + port)
